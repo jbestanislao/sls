@@ -27,4 +27,4 @@ jobs:
       run: npm install
 
     - name: Run DB Migration Script
-      run: npx ts-node src/my-script.ts # Adjust path to your TS file
+      run: npm run migrate:batch:test # Adjust path to your TS file
