@@ -1,0 +1,10 @@
+name: Unit Tests
+run-name: Unit Tests for ${{ inputs.tag || github.head_ref }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Branch/tag/hash to test"
+        required: true
+        default: "master"
