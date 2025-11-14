@@ -12,7 +12,7 @@ on:
 jobs:
   run_db_migration:
     name: DB Migration
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
