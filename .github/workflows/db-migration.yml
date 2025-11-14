@@ -25,7 +25,19 @@ on:
           - "create"
           - "list"
           - "profiles"
-          - "rollback"      
+          - "rollback"
+      batch_id:
+        description: "Batch ID for migration"
+        required: true
+      batch_name:
+        description: "Batch Name for migration - needed for create command"
+        required: false
+      client_name:
+        description: "Client Name - needed for create command"
+        required: false
+      percentage:
+        description: "Percentage of total records - needed for create command"
+        required: false
 
 jobs:
   run_db_migration:
