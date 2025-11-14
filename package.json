@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate:batch:test": "ts-node src/my-script.ts"
+    "migrate:batch:verify": "ts-node src/my-script.ts"
   },
   "keywords": [],
   "author": "",

@@ -4,6 +4,10 @@ run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
 on:
   workflow_dispatch:
     inputs:
+      tag:
+        description: "Branch/tag/hash to test"
+        required: true
+        default: "migration-plan-gha"
       env:
         description: "Environment to run the migration against"
         required: true
@@ -12,10 +16,6 @@ on:
           - "dev"
           - "qa"
           - "prod"
-      tag:
-        description: "Branch/tag/hash to test"
-        required: true
-        default: "migration-plan-gha"
       command:
         description: "Migration command to run"
         required: true
@@ -45,4 +45,7 @@ jobs:
       run: npm install
 
     - name: Run DB Migration Script
-      run: npm run migrate:batch:test # Adjust path to your TS file
+      run: |
+        echo "Running db migration with command ${{ inputs.command }} on environment ${{ inputs.env }}"
+        flyway ${{ inputs.command }} -X
+        npm run migrate:batch:${{ inputs.command }}
