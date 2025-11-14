@@ -1,5 +1,5 @@
-name: Unit Tests
-run-name: Unit Tests for ${{ inputs.tag || github.head_ref }}
+name: DB Migration
+run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
 
 on:
   workflow_dispatch:
@@ -8,3 +8,13 @@ on:
         description: "Branch/tag/hash to test"
         required: true
         default: "master"
+
+jobs:
+  run_db_migration:
+    name: DB Migration
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
