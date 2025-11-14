@@ -4,10 +4,28 @@ run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
 on:
   workflow_dispatch:
     inputs:
+      env:
+        description: "Environment to run the migration against"
+        required: true
+        type: choice
+        options:
+          - "dev"
+          - "qa"
+          - "prod"
       tag:
         description: "Branch/tag/hash to test"
         required: true
         default: "migration-plan-gha"
+      command:
+        description: "Migration command to run"
+        required: true
+        type: choice
+        options:
+          - "verify"
+          - "create"
+          - "list"
+          - "profiles"
+          - "rollback"      
 
 jobs:
   run_db_migration:
