@@ -47,5 +47,4 @@ jobs:
     - name: Run DB Migration Script
       run: |
         echo "Running db migration with command ${{ inputs.command }} on environment ${{ inputs.env }}"
-        flyway ${{ inputs.command }} -X
         npm run migrate:batch:${{ inputs.command }}
