@@ -13,8 +13,18 @@ jobs:
   run_db_migration:
     name: DB Migration
     runs-on: self-hosted
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ inputs.tag }}
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Or your desired Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run DB Migration Script
+      run: npx ts-node src/my-script.ts # Adjust path to your TS file
