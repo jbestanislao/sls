@@ -50,8 +50,8 @@ jobs:
     - name: Run DB Migration Script
       run: |
         echo "Creating migration batch on environment ${{ inputs.env }}"
-        if [ "${{ inputs.tag }}" == "" ]; then
-          npm run migrate:batch:rollback -- --env=${{ inputs.env }} --batchId="${{ inputs.batch_id }}" --dryRun=${{ inputs.preCheck }} --tag=${{ inputs.tag }}
+        if [ "${{ inputs.profile_ids }}" != "" ]; then
+          npm run migrate:batch:rollback -- --env=${{ inputs.env }} --batchId="${{ inputs.batch_id }}" --dryRun=${{ inputs.preCheck }} --tag=${{ inputs.profile_ids }}
         else
           npm run migrate:batch:rollback -- --env=${{ inputs.env }} --batchId="${{ inputs.batch_id }}" --dryRun=${{ inputs.preCheck }} 
         fi        
