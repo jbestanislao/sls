@@ -19,6 +19,7 @@ on:
       batch_name:
         description: "Batch Name for migration"
         required: true
+        default: "BATCH-YYYY-MM-DD-NNN"
       client_name:
         description: "Client Name"
         required: true
