@@ -1,0 +1,44 @@
+name: DB Migration Precheck
+run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Branch/tag/hash to test"
+        required: true
+        default: "migration-plan-gha"
+      env:
+        description: "Environment to run the migration"
+        required: true
+        type: choice
+        options:
+          - "dev"
+          - "qa"
+          - "prod"
+      batch_id:
+        description: "Batch ID for migration"
+        required: true
+        default: "BATCH-YYYY-MM-DD-NNN"
+
+jobs:
+  run_db_migration:
+    name: DB Migration
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Or your desired Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run DB Migration Script
+      run: |
+        echo "Creating migration batch on environment ${{ inputs.env }}"
+        npm run migrate:batch:profiles -- --env=${{ inputs.env }} --batchId="${{ inputs.batch_id }}" --preCheck=true
