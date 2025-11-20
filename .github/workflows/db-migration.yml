@@ -9,7 +9,7 @@ on:
         required: true
         default: "migration-plan-gha"
       env:
-        description: "Environment to run the migration against"
+        description: "Environment to run the migration"
         required: true
         type: choice
         options:
@@ -59,4 +59,13 @@ jobs:
     - name: Run DB Migration Script
       run: |
         echo "Running db migration with command ${{ inputs.command }} on environment ${{ inputs.env }}"
-        npm run migrate:batch:${{ inputs.command }}
+        # npm run migrate:batch:${{ inputs.command }}
+        if: ${{ inputs.command == 'verify' }}; then
+          npm run migrate:batch:create -- --env=${{ inputs.env }} --batchId=${{ inputs.batch_id }}
+        else if: ${{ inputs.command == 'create' }}; then
+          npm run migrate:batch:create -- --env=${{ inputs.env }} --name="${{ inputs.batch_name }}" --clientName="${{ inputs.client_name }}" --percentage=${{ inputs.percentage }}
+        else if: ${{ inputs.command == 'profiles' }}; then
+          npm run migrate:batch:profiles -- --env=${{ inputs.env }} --batchId=${{ inputs.batch_id }} --preCheck=true
+        else if: ${{ inputs.command == 'migrate' }}; then
+          npm run migrate:batch:migrate -- --env=${{ inputs.env }} --batchId=${{ inputs.batch_id }}
+        fi
