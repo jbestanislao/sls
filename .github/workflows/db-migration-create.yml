@@ -1,0 +1,50 @@
+name: DB Migration
+run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Branch/tag/hash to test"
+        required: true
+        default: "migration-plan-gha"
+      env:
+        description: "Environment to run the migration"
+        required: true
+        type: choice
+        options:
+          - "dev"
+          - "qa"
+          - "prod"
+      batch_name:
+        description: "Batch Name for migration"
+        required: true
+      client_name:
+        description: "Client Name"
+        required: true
+      percentage:
+        description: "Percentage of total records to migrate"
+        required: true
+        default: 10
+
+jobs:
+  run_db_migration:
+    name: DB Migration
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Or your desired Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run DB Migration Script
+      run: |
+        echo "Creating migration batch on environment ${{ inputs.env }}"
+        npm run migrate:batch:create -- --env=${{ inputs.env }} --name="${{ inputs.batch_name }}" --clientName="${{ inputs.client_name }}" --percentage=${{ inputs.percentage }}        
