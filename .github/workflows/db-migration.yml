@@ -21,11 +21,11 @@ on:
         required: true
         type: choice
         options:
-          - "verify"
           - "create"
-          - "list"
+          - "verify"
           - "profiles"
           - "rollback"
+          - "list"
       batch_id:
         description: "Batch ID for migration"
         required: true
