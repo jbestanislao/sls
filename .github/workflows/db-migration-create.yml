@@ -1,4 +1,4 @@
-name: DB Migration Create Batch
+name: DB Migration Create
 run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
 
 on:

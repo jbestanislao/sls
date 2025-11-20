@@ -1,4 +1,4 @@
-name: DB Migration Verify
+name: DB Migration Rollback
 run-name: DB Migration for ${{ inputs.tag || github.head_ref }}
 
 on:
